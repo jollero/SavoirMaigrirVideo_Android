@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SM Video</string>
+
+    <string name="header_right_button">Je m\'inscris</string>
+
+    <string name="menu_decouvrir">Découvrir</string>
+    <string name="menu_bilan">Bilan minceur</string>
+    <string name="menu_temoignages">Témoignages</string>
+    <string name="menu_recettes">Recettes</string>
+    <string name="menu_recette">Recette</string>
+    <string name="menu_mon_compte">Mon compte</string>
+
+</resources>
