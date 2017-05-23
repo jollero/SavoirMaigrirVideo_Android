@@ -1,14 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="anxa.com.smvideo.activities.MainActivity">
+    android:orientation="vertical"
+    tools:context="anxa.com.smvideo.activities.MainActivity"
+    android:background="@drawable/fullbackground">
 
     <include
         layout="@layout/header_landing"
         android:layout_width="match_parent"
         android:layout_height="44dp" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_weight="3">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/greeting_jmc"
+                android:layout_weight="2"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/welcome_message"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:textSize="12dp"
+                android:layout_marginRight="2dp"/>
+            <Button
+                android:id="@+id/LandingRegisterButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/button_register"
+                android:textAllCaps="true"
+                android:layout_weight="4"
+                style="@style/OrangeButton"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_weight="15">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/landing_img01"
+                    android:layout_weight="60"
+                    style="@style/LandingImage"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/landing_1"
+                    android:layout_weight="40"
+                    style="@style/LandingButton"
+                    android:id="@+id/LandingDiscoverButton"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/landing_img02"
+                    android:layout_weight="60"
+                    android:layout_margin="0dp"
+                    style="@style/LandingImage"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/landing_2"
+                    android:layout_weight="40"
+                    style="@style/LandingButton"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/landing_img03"
+                    android:layout_weight="60"
+                    android:layout_margin="0dp"
+                    style="@style/LandingImage"
+                    android:id="@+id/LandingBilanButton"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/landing_3"
+                    android:layout_weight="40"
+                    style="@style/LandingButton"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/landing_img04"
+                    android:layout_weight="60"
+                    android:layout_margin="0dp"
+                    style="@style/LandingImage"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/landing_4"
+                    android:layout_weight="40"
+                    style="@style/LandingButton"
+                    android:id="@+id/LandingTestimonialButton"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/terms_of_service"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:textSize="12dp"
+                android:id="@+id/LandingRecettesButton"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="OrangeButton">
+        <item name="android:background">@drawable/button_orange_roundedcorners</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LandingButton">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="LandingImage">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
 </resources>

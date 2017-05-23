@@ -10,4 +10,12 @@
     <string name="menu_recette">Recette</string>
     <string name="menu_mon_compte">Mon compte</string>
 
+    <string name="button_register">je m\'inscris</string>
+
+    <string name="welcome_message">Bonjour, bienvenue sur le programme pour maigrir et être bien dans sa peau</string>
+    <string name="terms_of_service">Conditions Générales d\'Utilisation</string>
+    <string name="landing_1">Decouvrez le programme</string>
+    <string name="landing_2">Faites votre bilan minceur personnalise en video</string>
+    <string name="landing_3">Temoignages</string>
+    <string name="landing_4">Recettes</string>
 </resources>
