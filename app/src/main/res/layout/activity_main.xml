@@ -64,6 +64,7 @@
                     android:src="@drawable/landing_img01"
                     android:layout_weight="60"
                     style="@style/LandingImage"
+                    android:id="@+id/LandingImage1"
                     />
 
                 <Button
@@ -88,6 +89,7 @@
                     android:layout_weight="60"
                     android:layout_margin="0dp"
                     style="@style/LandingImage"
+                    android:id="@+id/LandingImage2"
                     />
 
                 <Button
@@ -96,7 +98,7 @@
                     android:text="@string/landing_2"
                     android:layout_weight="40"
                     style="@style/LandingButton"
-
+                    android:id="@+id/LandingBilanButton"
                     />
             </LinearLayout>
             <LinearLayout
@@ -112,7 +114,8 @@
                     android:layout_weight="60"
                     android:layout_margin="0dp"
                     style="@style/LandingImage"
-                    android:id="@+id/LandingBilanButton"
+                    android:id="@+id/LandingImage3"
+
                     />
 
                 <Button
@@ -121,7 +124,7 @@
                     android:text="@string/landing_3"
                     android:layout_weight="40"
                     style="@style/LandingButton"
-
+                    android:id="@+id/LandingTemoignagesButton"
                     />
             </LinearLayout>
             <LinearLayout
@@ -137,6 +140,7 @@
                     android:layout_weight="60"
                     android:layout_margin="0dp"
                     style="@style/LandingImage"
+                    android:id="@+id/LandingImage4"
                     />
 
                 <Button
@@ -145,7 +149,7 @@
                     android:text="@string/landing_4"
                     android:layout_weight="40"
                     style="@style/LandingButton"
-                    android:id="@+id/LandingTestimonialButton"
+                    android:id="@+id/LandingRecettesButton"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -164,7 +168,6 @@
                 android:background="@android:color/transparent"
                 android:textColor="@android:color/white"
                 android:textSize="12dp"
-                android:id="@+id/LandingRecettesButton"
                 />
         </LinearLayout>
     </LinearLayout>
