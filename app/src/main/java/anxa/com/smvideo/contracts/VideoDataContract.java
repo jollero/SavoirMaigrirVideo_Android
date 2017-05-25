@@ -10,5 +10,5 @@ import java.util.List;
 
 public class VideoDataContract extends BaseContract{
     @SerializedName("videos")
-    List<VideoContract> Videos;
+    public List<VideoContract> Videos;
 }

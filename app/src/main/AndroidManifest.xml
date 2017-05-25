@@ -3,6 +3,7 @@
     package="anxa.com.smvideo">
 
     <application
+        android:name="anxa.com.smvideo.ApplicationData"
         android:allowBackup="true"
         android:icon="@drawable/greeting_jmc"
         android:label="@string/app_name"
