@@ -3,6 +3,8 @@ package anxa.com.smvideo;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -21,6 +23,7 @@ public class ApplicationData extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         instance = this;
     }
 
