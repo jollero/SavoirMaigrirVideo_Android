@@ -6,6 +6,7 @@ import anxa.com.smvideo.common.CommandConstants;
 import anxa.com.smvideo.connection.http.AsyncResponse;
 import anxa.com.smvideo.connection.http.MasterCommand;
 import anxa.com.smvideo.connection.http.SavoirMaigrirVideoApiClient;
+import anxa.com.smvideo.contracts.RecipeResponseContract;
 import anxa.com.smvideo.contracts.VideoDataContract;
 import anxa.com.smvideo.contracts.VideoResponseContract;
 
@@ -40,5 +41,13 @@ public class ApiCaller {
         command.Command = CommandConstants.FREE_TESTIMONIALS;
 
         apiClient.GetAsync(asyncResponse, CommandConstants.API_VIDEOS, command, VideoResponseContract.class) ;
+    }
+    public  void GetFreeRecipes(AsyncResponse asyncResponse)
+    {
+
+        MasterCommand command = new MasterCommand();
+        command.Command = CommandConstants.FREE_RECIPES;
+
+        apiClient.GetAsync(asyncResponse, CommandConstants.API_RECIPES, command, RecipeResponseContract.class) ;
     }
 }
