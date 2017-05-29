@@ -51,6 +51,13 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         this.items = items;
         notifyDataSetChanged();
     }
+
+    @Override
+    public void clear() {
+        this.items = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return items.size();
@@ -90,7 +97,7 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         //display message
         viewHolder.recipeTitle.setText(recipe.Title);
         if (avatar == null) {
-            new AdapterDownloadImageTask(viewHolder.recipeImage).execute(recipe.ImageUrl);
+            new AdapterDownloadImageTask(viewHolder.recipeImage, recipe.Id).execute(recipe.ImageUrl);
         } else {
 
             viewHolder.recipeImage.setImageBitmap(avatar);
@@ -110,23 +117,25 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
     private class AdapterDownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         private ImageView bmImage;
         private String path;
+        private int Id;
 
-        public AdapterDownloadImageTask(ImageView bmImage) {
+        public AdapterDownloadImageTask(ImageView bmImage, int id) {
             this.bmImage = bmImage;
             this.path = bmImage.getTag().toString();
+            this.Id = id;
         }
 
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
-            String coachIdToSave = urldisplay.substring(urldisplay.indexOf("users/") + 6, urldisplay.lastIndexOf("/"));
+
 
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
 
-                if (!ApplicationData.getInstance().recipePhotoList.containsKey(coachIdToSave) && mIcon11 != null) {
-                    ApplicationData.getInstance().recipePhotoList.put(coachIdToSave, mIcon11);
+                if (!ApplicationData.getInstance().recipePhotoList.containsKey(String.valueOf(Id)) && mIcon11 != null) {
+                    ApplicationData.getInstance().recipePhotoList.put(String.valueOf(Id), mIcon11);
                 }
 
             } catch (Exception e) {
