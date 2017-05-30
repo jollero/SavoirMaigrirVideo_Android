@@ -113,10 +113,11 @@ public class RecipesActivity extends BaseVideoActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         List<RecipeContract> currentViewRecipeList  = new ArrayList<>();
-        recipesListView.setAdapter(null);
+
         RecipeContract.RecipeTypeEnum recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Entree;
 
         if(v.getId() == R.id.button_entree || v.getId() == R.id.button_salad  || v.getId() == R.id.button_plat  || v.getId() == R.id.button_dessert  || v.getId() == R.id.button_soup ) {
+            recipesListView.setAdapter(null);
             recipesListView.setAdapter(adapter);
             if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 ((Button)v.findViewById(v.getId())).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
@@ -157,6 +158,7 @@ public class RecipesActivity extends BaseVideoActivity implements View.OnClickLi
             int recipeId  = (Integer) v.getTag(R.id.recipe_id);
             Intent mainIntent;
             mainIntent = new Intent(this, RecipeActivity.class);
+            mainIntent.putExtra("RECIPE_ID", recipeId);
             startActivity(mainIntent);
         }
 

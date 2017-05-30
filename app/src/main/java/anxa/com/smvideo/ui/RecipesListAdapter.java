@@ -1,12 +1,7 @@
 package anxa.com.smvideo.ui;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import anxa.com.smvideo.ApplicationData;
 import anxa.com.smvideo.R;
+import anxa.com.smvideo.connection.http.RecipeDownloadImageAsync;
 import anxa.com.smvideo.contracts.RecipeContract;
+import anxa.com.smvideo.util.RecipeHelper;
 
 /**
  * Created by angelaanxa on 5/25/2017.
@@ -92,12 +84,12 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         row.setTag(R.id.recipe_id, recipe.Id);
         row.setOnClickListener(this);
         Bitmap avatar = null;
-        avatar = getAvatar(recipe.Id);
+        avatar = RecipeHelper.GetRecipeImage(recipe.Id);
         viewHolder.recipeImage.setTag(recipe.Id);
         //display message
         viewHolder.recipeTitle.setText(recipe.Title);
         if (avatar == null) {
-            new AdapterDownloadImageTask(viewHolder.recipeImage, recipe.Id).execute(recipe.ImageUrl);
+            new RecipeDownloadImageAsync(viewHolder.recipeImage, recipe.Id).execute(recipe.ImageUrl);
         } else {
 
             viewHolder.recipeImage.setImageBitmap(avatar);
@@ -112,65 +104,21 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
     }
     @Override
     public void onClick(View v) {
+        if (v != null) {
 
-    }
-    private class AdapterDownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        private ImageView bmImage;
-        private String path;
-        private int Id;
+            if (items != null && items.size() > 0) {
+                int pos = (Integer) v.getTag(R.id.recipe_id);
+//                items.get(pos).is_read = true;
 
-        public AdapterDownloadImageTask(ImageView bmImage, int id) {
-            this.bmImage = bmImage;
-            this.path = bmImage.getTag().toString();
-            this.Id = id;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-
-
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-
-                if (!ApplicationData.getInstance().recipePhotoList.containsKey(String.valueOf(Id)) && mIcon11 != null) {
-                    ApplicationData.getInstance().recipePhotoList.put(String.valueOf(Id), mIcon11);
+                if (listener != null) {
+                    listener.onClick(v);
                 }
-
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            if (!bmImage.getTag().toString().equals(path)) {
-                return;
-            }
-
-            if (result != null && bmImage != null) {
-                bmImage.setVisibility(View.VISIBLE);
-                bmImage.setImageBitmap(result);
-
-            } else {
-                bmImage.setVisibility(View.GONE);
             }
         }
-    }
-    private Bitmap getAvatar(int recipeId) {
-        Bitmap avatarBMP = null;
-        if (recipeId > 0) {
-            avatarBMP = ApplicationData.getInstance().recipePhotoList.get(String.valueOf(recipeId));
-
-            return avatarBMP;
-
-        }
-
-        return avatarBMP;
 
     }
+
+
     private static class ViewHolder {
         ImageView recipeImage;
         TextView recipeTitle;

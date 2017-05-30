@@ -24,4 +24,5 @@
     <string name="recipe_plat">Plat</string>
     <string name="recipe_dessert">Dessert</string>
     <string name="recipe_soup">Soupe</string>
+    <string name="recipe_preparation">Préparation</string>
 </resources>
