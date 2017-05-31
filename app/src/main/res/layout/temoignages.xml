@@ -6,4 +6,15 @@
         android:layout_width="match_parent"
         layout="@layout/header_menu"
         android:id="@+id/headermenu"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <anxa.com.smvideo.ui.CustomListView
+            android:id="@+id/testimonialListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#000000"
+            android:divider="#000000"
+            android:dividerHeight="1dp" />
+    </ScrollView>
 </LinearLayout>
