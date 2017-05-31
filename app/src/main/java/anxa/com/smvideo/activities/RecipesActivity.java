@@ -48,7 +48,7 @@ public class RecipesActivity extends BaseVideoActivity implements View.OnClickLi
         ((TextView)((RelativeLayout)findViewById(R.id.headermenu)).findViewById(R.id.header_title_tv)).setText(getString(R.string.menu_recettes));
 
         //ui
-        recipesListView = (CustomListView) findViewById(R.id.recipeListView);
+        recipesListView = (CustomListView) findViewById(R.id.recipesListView);
         recipesList = new ArrayList<RecipeContract>();
 
         if (adapter == null) {
