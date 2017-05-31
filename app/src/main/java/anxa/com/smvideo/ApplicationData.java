@@ -17,7 +17,29 @@ import anxa.com.smvideo.contracts.RecipeContract;
 
 public class ApplicationData extends Application {
 
+    public enum SelectedFragment{
+        Decouvir(0),
+        Bilan(1),
+        Temoignages(2),
+        Recettes(3),
+        MonCompte(4);
+
+        private int numVal;
+
+        SelectedFragment(int numVal) {
+            this.numVal = numVal;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
+    }
+
     private static ApplicationData instance = null;
+    public boolean showLandingPage = true;
+
+    public SelectedFragment selectedFragment = SelectedFragment.Decouvir;
+
     public Hashtable<String, Bitmap> recipePhotoList = new Hashtable<String, Bitmap>();
     public List<RecipeContract> recipeList = new ArrayList<>();
     @Override
