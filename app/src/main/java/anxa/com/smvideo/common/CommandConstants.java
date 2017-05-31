@@ -8,7 +8,9 @@ public class CommandConstants {
 
     /* API NAMES */
     public static String API_VIDEOS = "video";
+    public static String API_RECIPES = "recipe";
     /* API COMMANDS */
     public static String FREE_DISCOVER= "free/discover";
     public static String FREE_TESTIMONIALS = "free/testimonials";
+    public static String FREE_RECIPES = "free/all";
 }
