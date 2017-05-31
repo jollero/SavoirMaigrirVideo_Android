@@ -23,6 +23,7 @@ public class DiscoverActivity extends BaseVideoActivity {
             public void processFinish(Object output) {
 
                 VideoResponseContract c = (VideoResponseContract)output;
+                System.out.println("VideoResponseContract: " + c.Data.Videos.toString());
                 //INITIALIZE ALL ONCLICK AND API RELATED PROCESS HERE TO AVOID CRASHES
             }
         });

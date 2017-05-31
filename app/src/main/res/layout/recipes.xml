@@ -2,9 +2,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
     <include android:layout_height="44dp"
         android:layout_width="match_parent"
         layout="@layout/header_menu"
         android:id="@+id/headermenu"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:orientation="horizontal"
+        android:background="@color/recipeCategoryBackground">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:padding="5dp"
+            style="@style/OrangeButton"
+            android:text="@string/recipe_entree"
+            android:id="@+id/button_entree"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/recipe_salad"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_salad"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/recipe_plat"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_plat"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/recipe_dessert"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_dessert"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/recipe_soup"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_soup"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/listViewBackground">
+        <anxa.com.smvideo.ui.CustomListView
+            android:id="@+id/recipeListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#000000"
+            android:divider="#000000"
+            android:dividerHeight="1dp" />
+    </LinearLayout>
 </LinearLayout>

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by angelaanxa on 5/23/2017.
  */
 
-public class VideoDataContract extends BaseContract{
+public class VideoDataContract{
     @SerializedName("videos")
-    List<VideoContract> Videos;
+    public List<VideoContract> Videos;
 }

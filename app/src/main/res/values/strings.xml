@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SM Video</string>
+    <string name="app_name">Savoir Maigrir en Vidéo</string>
 
     <string name="header_right_button">Je m\'inscris</string>
 
@@ -18,4 +18,11 @@
     <string name="landing_2">Faites votre bilan minceur personnalise en video</string>
     <string name="landing_3">Temoignages</string>
     <string name="landing_4">Recettes</string>
+
+    <string name="recipe_entree">Entreé</string>
+    <string name="recipe_salad">Salade</string>
+    <string name="recipe_plat">Plat</string>
+    <string name="recipe_dessert">Dessert</string>
+    <string name="recipe_soup">Soupe</string>
+    <string name="recipe_preparation">Préparation</string>
 </resources>

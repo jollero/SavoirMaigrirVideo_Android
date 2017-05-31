@@ -7,4 +7,7 @@
     <color name="colorTopNav">#000000</color>
     <color name="colorOrangeButton">#FF771F</color>
     <color name="colorContenText">#333333</color>
+
+    <color name="listViewBackground">#F2F2F2</color>
+    <color name="recipeCategoryBackground">#343434</color>
 </resources>
