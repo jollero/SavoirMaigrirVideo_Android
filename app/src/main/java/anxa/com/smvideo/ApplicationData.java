@@ -4,6 +4,8 @@ import android.app.Application;
 import android.graphics.Bitmap;
 
 import com.crashlytics.android.Crashlytics;
+
+import anxa.com.smvideo.contracts.VideoContract;
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -17,9 +19,34 @@ import anxa.com.smvideo.contracts.RecipeContract;
 
 public class ApplicationData extends Application {
 
+    public enum SelectedFragment{
+        Decouvir(0),
+        Bilan(1),
+        Temoignages(2),
+        Recettes(3),
+        MonCompte(4);
+
+        private int numVal;
+
+        SelectedFragment(int numVal) {
+            this.numVal = numVal;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
+    }
+
     private static ApplicationData instance = null;
+    public boolean showLandingPage = true;
+
+    public SelectedFragment selectedFragment = SelectedFragment.Decouvir;
+
     public Hashtable<String, Bitmap> recipePhotoList = new Hashtable<String, Bitmap>();
+    public Hashtable<String, Bitmap> videoPhotoList = new Hashtable<String, Bitmap>();
     public List<RecipeContract> recipeList = new ArrayList<>();
+    public List<VideoContract> discoverVideoList = new ArrayList<>();
+    public List<VideoContract> testimonialVideoList = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();

@@ -5,4 +5,15 @@
     <include android:layout_height="44dp"
         android:layout_width="match_parent"
         layout="@layout/header_menu"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <anxa.com.smvideo.ui.CustomListView
+            android:id="@+id/discoverListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#000000"
+            android:divider="#000000"
+            android:dividerHeight="1dp" />
+    </ScrollView>
 </LinearLayout>

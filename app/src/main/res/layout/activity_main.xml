@@ -1,185 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="anxa.com.smvideo.activities.MainActivity"
-    android:background="@drawable/fullbackground">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/landingheader"
-        layout="@layout/header_landing"
+    <!-- The main content view -->
+    <RelativeLayout
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="44dp" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+        <include
+            layout="@layout/header_menu"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+
+    </RelativeLayout>
+
+    <!-- The navigation drawer -->
+    <RelativeLayout
+        android:id="@+id/drawerPane"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@+id/landingheader">
-        <LinearLayout
+        android:layout_gravity="start"
+        android:background="@drawable/fullbackground">
+
+        <!-- Profile Box -->
+
+        <RelativeLayout
+            android:id="@+id/profileBox"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="10dp"
-            android:orientation="horizontal"
-            android:layout_weight="3"
-            android:weightSum="1">
+            android:layout_height="110dp"
+            android:background="@android:color/transparent">
+
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:src="@drawable/greeting_jmc"
-                android:layout_weight="0.2"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:text="@string/welcome_message"
-                android:layout_weight="0.4"
-                android:textSize="12sp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="2dp"
-                android:layout_marginEnd="2dp"
-                android:minLines="3"
-                android:maxLines="4"/>
-            <Button
-                android:id="@+id/LandingRegisterButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/button_register"
-                android:textAllCaps="true"
-                android:layout_weight="0.4"
-                android:layout_gravity="center_vertical"
-                style="@style/OrangeButton"
-                android:padding="10dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="10dp"
-            android:orientation="vertical"
-            android:layout_weight="15">
+                android:id="@+id/avatar_header"
+                android:layout_width="123dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/nav_logo_sidenav" />
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/avatar_header"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/greeting_jmc" />
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/landing_img01"
-                    android:layout_weight="60"
-                    style="@style/LandingImage"
-                    android:id="@+id/LandingImage1"
-                    />
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@id/avatar_header"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/avatar"
+                android:orientation="vertical">
 
-                <Button
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/landing_1"
-                    android:layout_weight="40"
-                    style="@style/LandingButton"
-                    android:id="@+id/LandingDiscoverButton"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="@string/welcome_message"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
-            <LinearLayout
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/landing_img02"
-                    android:layout_weight="60"
-                    android:layout_margin="0dp"
-                    style="@style/LandingImage"
-                    android:id="@+id/LandingImage2"
-                    />
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/white" />
+        </RelativeLayout>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/landing_2"
-                    android:layout_weight="40"
-                    style="@style/LandingButton"
-                    android:id="@+id/LandingBilanButton"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/landing_img03"
-                    android:layout_weight="60"
-                    android:layout_margin="0dp"
-                    style="@style/LandingImage"
-                    android:id="@+id/LandingImage3"
+        <!-- List of Actions (pages) -->
+        <ListView
+            android:id="@+id/navList"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profileBox"
+            android:background="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent" />
 
-                    />
+    </RelativeLayout>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/landing_3"
-                    android:layout_weight="40"
-                    style="@style/LandingButton"
-                    android:id="@+id/LandingTemoignagesButton"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/landing_img04"
-                    android:layout_weight="60"
-                    android:layout_margin="0dp"
-                    style="@style/LandingImage"
-                    android:id="@+id/LandingImage4"
-                    />
+</android.support.v4.widget.DrawerLayout>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/landing_4"
-                    android:layout_weight="40"
-                    style="@style/LandingButton"
-                    android:id="@+id/LandingRecettesButton"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_margin="0dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_weight="1">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/terms_of_service"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:textSize="12dp"
-                />
-        </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>

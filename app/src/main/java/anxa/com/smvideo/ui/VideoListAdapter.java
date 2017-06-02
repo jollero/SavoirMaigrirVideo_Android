@@ -13,25 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import anxa.com.smvideo.R;
-import anxa.com.smvideo.connection.http.RecipeDownloadImageAsync;
-import anxa.com.smvideo.contracts.RecipeContract;
-import anxa.com.smvideo.util.RecipeHelper;
+import anxa.com.smvideo.connection.http.VideoDownloadImageAsync;
+import anxa.com.smvideo.contracts.VideoContract;
+import anxa.com.smvideo.util.VideoHelper;
 
 /**
- * Created by angelaanxa on 5/25/2017.
+ * Created by angelaanxa on 5/31/2017.
  */
 
-public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements View.OnClickListener {
-
+public class VideoListAdapter extends ArrayAdapter<VideoContract> implements View.OnClickListener {
     private final Context context;
-    private List<RecipeContract> items = new ArrayList<RecipeContract>();
+    private List<VideoContract> items = new ArrayList<VideoContract>();
 
     LayoutInflater layoutInflater;
     String inflater = Context.LAYOUT_INFLATER_SERVICE;
     View.OnClickListener listener;
 
-    public RecipesListAdapter(Context context, List<RecipeContract> items, View.OnClickListener listener) {
-        super(context, R.layout.listitem_recipe, items);
+    public VideoListAdapter(Context context, List<VideoContract> items, View.OnClickListener listener) {
+        super(context, R.layout.listitem_video, items);
 
         layoutInflater = (LayoutInflater) context.getSystemService(inflater);
         this.context = context;
@@ -39,7 +38,7 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         this.listener = listener;
 
     }
-    public void updateItems(List<RecipeContract> items) {
+    public void updateItems(List<VideoContract> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -58,20 +57,20 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder = null;
+        VideoListAdapter.ViewHolder viewHolder = null;
 
         View row = convertView;
         if (row == null) {
             LayoutInflater layoutInflator = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            row = layoutInflator.inflate(R.layout.listitem_recipe, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.recipeImage = (ImageView) row.findViewById(R.id.recipeImage);
-            viewHolder.recipeTitle = ((TextView) row.findViewById(R.id.recipeTitle));
+            row = layoutInflator.inflate(R.layout.listitem_video, parent, false);
+            viewHolder = new VideoListAdapter.ViewHolder();
+            viewHolder.videoImage = (ImageView) row.findViewById(R.id.videoImage);
+            viewHolder.videoTitle = ((TextView) row.findViewById(R.id.videoTitle));
             row.setTag(viewHolder);
         }else {
-            viewHolder = (ViewHolder) row.getTag();
+            viewHolder = (VideoListAdapter.ViewHolder) row.getTag();
         }
 
         int itemCount = items.size() - position;
@@ -80,19 +79,19 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
             System.out.println("getPosition");
         }
 
-        RecipeContract recipe = (RecipeContract) items.get(position);
-        row.setTag(R.id.recipe_id, recipe.Id);
+        VideoContract contract = (VideoContract) items.get(position);
+        row.setTag(R.id.video_id, contract.Id);
         row.setOnClickListener(this);
         Bitmap avatar = null;
-        avatar = RecipeHelper.GetRecipeImage(recipe.Id);
-        viewHolder.recipeImage.setTag(recipe.Id);
+        avatar = VideoHelper.GetVideoImage(contract.Id);
+        viewHolder.videoImage.setTag(contract.Id);
         //display message
-        viewHolder.recipeTitle.setText(recipe.Title);
+        viewHolder.videoTitle.setText(contract.Title);
         if (avatar == null) {
-            new RecipeDownloadImageAsync(viewHolder.recipeImage, recipe.Id).execute(recipe.ImageUrl);
+            new VideoDownloadImageAsync(viewHolder.videoImage, contract.Id).execute(contract.ThumbnailUrl);
         } else {
 
-            viewHolder.recipeImage.setImageBitmap(avatar);
+            viewHolder.videoImage.setImageBitmap(avatar);
         }
 
         return row;
@@ -120,7 +119,7 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
 
 
     private static class ViewHolder {
-        ImageView recipeImage;
-        TextView recipeTitle;
+        ImageView videoImage;
+        TextView videoTitle;
     }
 }

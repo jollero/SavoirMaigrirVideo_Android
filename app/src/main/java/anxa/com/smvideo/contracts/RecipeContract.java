@@ -10,7 +10,7 @@ public class RecipeContract {
     @SerializedName("id")
     public int Id;
     @SerializedName("type")
-    public RecipeType RecipeType;
+    public  int RecipeType;
     @SerializedName("title")
     public String Title;
     @SerializedName("ingredientsTitle")
@@ -26,18 +26,28 @@ public class RecipeContract {
     @SerializedName("imageUrl")
     public String ImageUrl;
 
-    public static enum RecipeType
+    public  enum RecipeTypeEnum
     {
-        Appetizer,
-        Drink,
-        Dessert,
-        Entree,
-        Plat,
-        Salad,
-        Sauce,
-        Snack,
-        Soup,
-        Other
+        Appetizer(1),
+        Drink(2),
+        Dessert(3),
+        Entree(4),
+        Plat(5),
+        Salad(6),
+        Sauce(7),
+        Snack(8),
+        Soup(9),
+        Other(10);
+
+        private int numVal;
+
+        RecipeTypeEnum(int numVal) {
+            this.numVal = numVal;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
     }
 
 }

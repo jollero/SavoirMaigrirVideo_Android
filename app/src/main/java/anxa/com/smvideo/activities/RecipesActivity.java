@@ -1,17 +1,18 @@
 package anxa.com.smvideo.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import java.util.List;
 
 import anxa.com.smvideo.ApplicationData;
 import anxa.com.smvideo.R;
+import anxa.com.smvideo.connection.ApiCaller;
 import anxa.com.smvideo.connection.http.AsyncResponse;
 import anxa.com.smvideo.contracts.RecipeContract;
 import anxa.com.smvideo.contracts.RecipeResponseContract;
-import anxa.com.smvideo.contracts.VideoResponseContract;
 import anxa.com.smvideo.ui.CustomListView;
 import anxa.com.smvideo.ui.RecipesListAdapter;
 
@@ -30,128 +31,185 @@ import anxa.com.smvideo.ui.RecipesListAdapter;
  * Created by angelaanxa on 5/24/2017.
  */
 
-public class RecipesActivity extends BaseVideoActivity implements View.OnClickListener {
+public class RecipesActivity extends Fragment implements View.OnClickListener {
 
     private CustomListView recipesListView;
     private RecipesListAdapter adapter;
     private List<RecipeContract> recipesList;
 
+    private Context context;
 
+    protected ApiCaller caller;
+
+    View mView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipes);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        this.context = getActivity();
+
+        mView = inflater.inflate(R.layout.recipes, null);
 
         //header change
-        ((TextView)((RelativeLayout)findViewById(R.id.headermenu)).findViewById(R.id.header_title_tv)).setText(getString(R.string.menu_recettes));
+        ((TextView) (mView.findViewById(R.id.header_title_tv))).setText(getString(R.string.menu_recettes));
 
         //ui
-        recipesListView = (CustomListView) findViewById(R.id.recipeListView);
+        recipesListView = (CustomListView) mView.findViewById(R.id.recipeListView);
         recipesList = new ArrayList<RecipeContract>();
 
         if (adapter == null) {
-            adapter = new RecipesListAdapter(this, recipesList, this);
+            adapter = new RecipesListAdapter(context, recipesList, this);
         }
+
+        caller = new ApiCaller();
+
         recipesListView.setAdapter(adapter);
 
-
-        //api call
-        caller.GetFreeRecipes(new AsyncResponse() {
-            @Override
-            public void processFinish(Object output) {
-                AddOnClickListener();
-                if(output != null) {
-
-                    RecipeResponseContract c = (RecipeResponseContract) output;
-                    //INITIALIZE ALL ONCLICK AND API RELATED PROCESS HERE TO AVOID CRASHES
-
-                    if (c != null && c.Data != null && c.Data.Recipes != null) {
-
-
-                        int unreadCount = 0;
-
-                        List<RecipeContract> recipesList = (List<RecipeContract>) c.Data.Recipes;
-                        ApplicationData.getInstance().recipeList = recipesList;
-
-                        List<RecipeContract> currentViewRecipeList  = recipesList;
-                        for(RecipeContract r : recipesList)
-                        {
-
-                        }
-                        adapter.updateItems(recipesList);
-
-                    }
+        if (ApplicationData.getInstance().recipeList != null && ApplicationData.getInstance().recipeList.size() > 0) {
+            AddOnClickListener();
+            recipesList = ApplicationData.getInstance().recipeList;
+            List<RecipeContract> currentViewRecipeList = new ArrayList<>();
+            for (RecipeContract r : recipesList) {
+                if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
+                    currentViewRecipeList.add(r);
                 }
             }
+            adapter.updateItems(currentViewRecipeList);
+        } else {
+            //api call
+            caller.GetFreeRecipes(new AsyncResponse() {
+                @Override
+                public void processFinish(Object output) {
+                    AddOnClickListener();
+                    if (output != null) {
+
+                        RecipeResponseContract c = (RecipeResponseContract) output;
+                        //INITIALIZE ALL ONCLICK AND API RELATED PROCESS HERE TO AVOID CRASHES
+
+                        if (c != null && c.Data != null && c.Data.Recipes != null) {
 
 
-        });
+                            int unreadCount = 0;
+
+                            recipesList = (List<RecipeContract>) c.Data.Recipes;
+                            ApplicationData.getInstance().recipeList = recipesList;
+
+                            List<RecipeContract> currentViewRecipeList = new ArrayList<RecipeContract>();
+                            for (RecipeContract r : recipesList) {
+                                if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
+                                    currentViewRecipeList.add(r);
+                                }
+                            }
+                            adapter.updateItems(currentViewRecipeList);
+                        }
+                    }
+                }
+            });
+        }
+
+        return mView;
+
     }
 
     @Override
     public void onClick(View v) {
-if(v.getId() == R.id.button_entree){
-    if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-        ((Button)v.findViewById(R.id.button_entree)).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
-    } else {
-        ((Button)v.findViewById(R.id.button_entree)).setBackground( getResources().getDrawable(R.drawable.button_orange_roundedcorners));
+        List<RecipeContract> currentViewRecipeList = new ArrayList<>();
+
+        RecipeContract.RecipeTypeEnum recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Entree;
+
+        if (v.getId() == R.id.button_entree || v.getId() == R.id.button_salad || v.getId() == R.id.button_plat || v.getId() == R.id.button_dessert || v.getId() == R.id.button_soup) {
+            recipesListView.setAdapter(null);
+            recipesListView.setAdapter(adapter);
+            if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                ((Button) v.findViewById(v.getId())).setBackgroundDrawable(getResources().getDrawable(R.drawable.button_orange_roundedcorners));
+            } else {
+                ((Button) v.findViewById(v.getId())).setBackground(getResources().getDrawable(R.drawable.button_orange_roundedcorners));
+            }
+            if (v.getId() == R.id.button_entree) {
+                UpdateCategoryButtons(RecipeContract.RecipeTypeEnum.Entree);
+                recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Entree;
+            }
+            if (v.getId() == R.id.button_salad) {
+                UpdateCategoryButtons(RecipeContract.RecipeTypeEnum.Salad);
+                recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Salad;
+            }
+            if (v.getId() == R.id.button_plat) {
+                UpdateCategoryButtons(RecipeContract.RecipeTypeEnum.Plat);
+                recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Plat;
+            }
+            if (v.getId() == R.id.button_dessert) {
+                UpdateCategoryButtons(RecipeContract.RecipeTypeEnum.Dessert);
+                recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Dessert;
+            }
+            if (v.getId() == R.id.button_soup) {
+
+                UpdateCategoryButtons(RecipeContract.RecipeTypeEnum.Soup);
+                recipeCategoryToSearch = RecipeContract.RecipeTypeEnum.Soup;
+            }
+            for (RecipeContract r : recipesList) {
+                if (r.RecipeType == recipeCategoryToSearch.getNumVal()) {
+                    currentViewRecipeList.add(r);
+                }
+            }
+            adapter.updateItems(currentViewRecipeList);
+        } else {
+            int recipeId = (Integer) v.getTag(R.id.recipe_id);
+            Intent mainIntent;
+            mainIntent = new Intent(context, RecipeActivity.class);
+            mainIntent.putExtra("RECIPE_ID", recipeId);
+            startActivity(mainIntent);
+        }
+
     }
-    ((Button)findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
-    ((Button)findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
-    ((Button)findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
-    ((Button)findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
+
+
+    private void AddOnClickListener() {
+        ((Button) mView.findViewById(R.id.button_entree)).setOnClickListener(this);
+        ((Button) mView.findViewById(R.id.button_salad)).setOnClickListener(this);
+        ((Button) mView.findViewById(R.id.button_plat)).setOnClickListener(this);
+        ((Button) mView.findViewById(R.id.button_dessert)).setOnClickListener(this);
+        ((Button) mView.findViewById(R.id.button_soup)).setOnClickListener(this);
+    }
+
+    private void UpdateCategoryButtons(RecipeContract.RecipeTypeEnum enumVal) {
+        if (enumVal == RecipeContract.RecipeTypeEnum.Entree) {
+
+            ((Button) mView.findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
+        }
+        if (enumVal == RecipeContract.RecipeTypeEnum.Salad) {
+            ((Button) mView.findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
+        }
+        if (enumVal == RecipeContract.RecipeTypeEnum.Soup) {
+            ((Button) mView.findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
+        }
+        if (enumVal == RecipeContract.RecipeTypeEnum.Dessert) {
+            ((Button) mView.findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
+        }
+        if (enumVal == RecipeContract.RecipeTypeEnum.Plat) {
+            ((Button) mView.findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
+            ((Button) mView.findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    private Gson gson;
+
+    {
+        gson = new Gson();
+    }
 }
-        if(v.getId() == R.id.button_salad){
-            if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                ((Button)v.findViewById(R.id.button_salad)).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
-            } else {
-                ((Button)v.findViewById(R.id.button_salad)).setBackground( getResources().getDrawable(R.drawable.button_orange_roundedcorners));
-            }
-            ((Button)findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(v.getId() == R.id.button_plat){
-            if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                ((Button)v.findViewById(R.id.button_plat)).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
-            } else {
-                ((Button)v.findViewById(R.id.button_plat)).setBackground( getResources().getDrawable(R.drawable.button_orange_roundedcorners));
-            }
-            ((Button)findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(v.getId() == R.id.button_dessert){
-            if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                ((Button)v.findViewById(R.id.button_dessert)).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
-            } else {
-                ((Button)v.findViewById(R.id.button_dessert)).setBackground( getResources().getDrawable(R.drawable.button_orange_roundedcorners));
-            }
-            ((Button)findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_soup)).setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(v.getId() == R.id.button_soup){
-            if(Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                ((Button)v.findViewById(R.id.button_soup)).setBackgroundDrawable( getResources().getDrawable(R.drawable.button_orange_roundedcorners) );
-            } else {
-                ((Button)v.findViewById(R.id.button_soup)).setBackground( getResources().getDrawable(R.drawable.button_orange_roundedcorners));
-            }
-            ((Button)findViewById(R.id.button_entree)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_salad)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_dessert)).setBackgroundColor(Color.TRANSPARENT);
-            ((Button)findViewById(R.id.button_plat)).setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-    private void AddOnClickListener(){
-        ((Button)findViewById(R.id.button_entree)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button_salad)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button_plat)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button_dessert)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button_soup)).setOnClickListener(this);
-    }
-}
+

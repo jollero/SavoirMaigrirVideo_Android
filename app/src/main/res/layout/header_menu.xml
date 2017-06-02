@@ -10,33 +10,46 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_menu_white_24dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:src="@drawable/ic_menu_white_24dp" />
+
+    <ImageView
+        android:id="@+id/header_menu_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:onClick="onBackPressed"
+        android:src="@drawable/ic_chevron_left_white_24dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/header_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
+        android:text="@string/menu_decouvrir"
         android:textColor="@android:color/white"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:text="@string/menu_decouvrir" />
+        android:textStyle="bold" />
 
 
     <TextView
         android:id="@+id/header_right_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
         android:gravity="center"
+        android:text="@string/header_right_button"
         android:textColor="#FF771F"
         android:textSize="14dp"
-        android:textStyle="normal"
-        android:text="@string/header_right_button"
-        android:layout_marginRight="5dp"/>
+        android:textStyle="normal" />
 
 </RelativeLayout>

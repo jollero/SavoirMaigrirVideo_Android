@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/listNotifications"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
@@ -17,20 +17,20 @@
         android:weightSum="10">
 
 
-<ImageView
-    android:id="@+id/recipeImage"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="3"
-    android:scaleType="fitXY"
-    android:paddingLeft="0dp"
-    android:paddingRight="10dp"
-    android:adjustViewBounds="true"/>
-        <TextView
-            android:id="@+id/recipeTitle"
+        <ImageView
+            android:id="@+id/videoImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/recipeImage"
+            android:layout_weight="3"
+            android:scaleType="fitXY"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:adjustViewBounds="true"/>
+        <TextView
+            android:id="@+id/videoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/videoImage"
             android:paddingRight="10dp"
             android:text="Recipe Title"
             android:gravity="center_vertical"
