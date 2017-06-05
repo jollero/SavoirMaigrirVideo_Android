@@ -54,63 +54,69 @@ public class RecipesActivity extends Fragment implements View.OnClickListener {
         //header change
         ((TextView) (mView.findViewById(R.id.header_title_tv))).setText(getString(R.string.menu_recettes));
 
-        //ui
         recipesListView = (CustomListView) mView.findViewById(R.id.recipesListView);
-        recipesList = new ArrayList<RecipeContract>();
 
-        if (adapter == null) {
-            adapter = new RecipesListAdapter(context, recipesList, this);
-        }
-
-        caller = new ApiCaller();
-
-        recipesListView.setAdapter(adapter);
-
-        if (ApplicationData.getInstance().recipeList != null && ApplicationData.getInstance().recipeList.size() > 0) {
-            AddOnClickListener();
-            recipesList = ApplicationData.getInstance().recipeList;
-            List<RecipeContract> currentViewRecipeList = new ArrayList<>();
-            for (RecipeContract r : recipesList) {
-                if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
-                    currentViewRecipeList.add(r);
-                }
-            }
-            adapter.updateItems(currentViewRecipeList);
-        } else {
-            //api call
-            caller.GetFreeRecipes(new AsyncResponse() {
-                @Override
-                public void processFinish(Object output) {
-                    AddOnClickListener();
-                    if (output != null) {
-
-                        RecipeResponseContract c = (RecipeResponseContract) output;
-                        //INITIALIZE ALL ONCLICK AND API RELATED PROCESS HERE TO AVOID CRASHES
-
-                        if (c != null && c.Data != null && c.Data.Recipes != null) {
-
-
-                            int unreadCount = 0;
-
-                            recipesList = (List<RecipeContract>) c.Data.Recipes;
-                            ApplicationData.getInstance().recipeList = recipesList;
-
-                            List<RecipeContract> currentViewRecipeList = new ArrayList<RecipeContract>();
-                            for (RecipeContract r : recipesList) {
-                                if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
-                                    currentViewRecipeList.add(r);
-                                }
-                            }
-                            adapter.updateItems(currentViewRecipeList);
-                        }
-                    }
-                }
-            });
-        }
+        PopulateList();
 
         return mView;
 
     }
+public  void PopulateList()
+{
+    //ui
+
+    recipesList = new ArrayList<RecipeContract>();
+
+    if (adapter == null) {
+        adapter = new RecipesListAdapter(getActivity(), recipesList, this);
+    }
+
+    caller = new ApiCaller();
+
+    recipesListView.setAdapter(adapter);
+
+    if (ApplicationData.getInstance().recipeList != null && ApplicationData.getInstance().recipeList.size() > 0) {
+        AddOnClickListener();
+        recipesList = ApplicationData.getInstance().recipeList;
+        List<RecipeContract> currentViewRecipeList = new ArrayList<>();
+        for (RecipeContract r : recipesList) {
+            if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
+                currentViewRecipeList.add(r);
+            }
+        }
+        adapter.updateItems(currentViewRecipeList);
+    } else {
+        //api call
+        caller.GetFreeRecipes(new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                AddOnClickListener();
+                if (output != null) {
+
+                    RecipeResponseContract c = (RecipeResponseContract) output;
+                    //INITIALIZE ALL ONCLICK AND API RELATED PROCESS HERE TO AVOID CRASHES
+
+                    if (c != null && c.Data != null && c.Data.Recipes != null) {
+
+
+                        int unreadCount = 0;
+
+                        recipesList = (List<RecipeContract>) c.Data.Recipes;
+                        ApplicationData.getInstance().recipeList = recipesList;
+
+                        List<RecipeContract> currentViewRecipeList = new ArrayList<RecipeContract>();
+                        for (RecipeContract r : recipesList) {
+                            if (r.RecipeType == RecipeContract.RecipeTypeEnum.Entree.getNumVal()) {
+                                currentViewRecipeList.add(r);
+                            }
+                        }
+                        adapter.updateItems(currentViewRecipeList);
+                    }
+                }
+            }
+        });
+    }
+}
 
     @Override
     public void onClick(View v) {
