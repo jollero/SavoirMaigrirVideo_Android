@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubePlayer;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -31,7 +32,7 @@ import anxa.com.smvideo.ui.RecipesListAdapter;
  * Created by angelaanxa on 5/24/2017.
  */
 
-public class RecipesActivity extends Fragment implements View.OnClickListener {
+public class RecipesActivity extends Fragment implements View.OnClickListener{
 
     private CustomListView recipesListView;
     private RecipesListAdapter adapter;
@@ -88,6 +89,7 @@ public  void PopulateList()
     } else {
         //api call
         caller.GetFreeRecipes(new AsyncResponse() {
+
             @Override
             public void processFinish(Object output) {
                 AddOnClickListener();

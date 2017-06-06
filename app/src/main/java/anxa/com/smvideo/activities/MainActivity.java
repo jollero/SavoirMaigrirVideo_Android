@@ -81,6 +81,7 @@ public class MainActivity extends BaseVideoActivity implements View.OnClickListe
         switch (position) {
             case 0: //decouvir
                 fragment = new DiscoverActivity();
+
                 break;
             case 1: //bilan
                 fragment = new BilanMinceurActivity();
@@ -101,34 +102,14 @@ public class MainActivity extends BaseVideoActivity implements View.OnClickListe
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.mainContent, fragment)
+        //fragmentManager.beginTransaction().
+        //remove(getFragmentManager().findFragmentByTag("CURRENT_FRAGMENT")).commit();
+
+        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment, "CURRENT_FRAGMENT")
                 .commit();
 
 
-/*
-  switch (position) {
-            case 0: //decouvir
 
-                break;
-            case 1: //bilan
-
-                break;
-            case 2: //temoignages
-
-                break;
-            case 3: //recetters
-                ((RecipesActivity)fragment).PopulateList();
-
-                break;
-            case 4: //mon compte
-                break;
-            default:
-                ((RecipesActivity)fragment).PopulateList();
-
-
-        }
-*/
 
         mDrawerList.setItemChecked(position, true);
         setTitle(mNavItems.get(position).mTitle);
