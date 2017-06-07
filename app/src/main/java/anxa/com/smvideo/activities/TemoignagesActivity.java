@@ -55,7 +55,7 @@ public class TemoignagesActivity extends Fragment implements View.OnClickListene
         caller = new ApiCaller();
 
         //header change
-        ((TextView) (mView.findViewById(R.id.header_title_tv))).setText(getString(R.string.menu_decouvrir));
+        ((TextView) (mView.findViewById(R.id.header_title_tv))).setText(getString(R.string.menu_temoignages));
 
         //ui
         customListView = (CustomListView) mView.findViewById(R.id.testimonialListView);
