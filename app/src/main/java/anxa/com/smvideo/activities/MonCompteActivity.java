@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,17 +40,18 @@ public class MonCompteActivity extends Fragment {
         //header change
         ((TextView) ((RelativeLayout) mView.findViewById(R.id.headermenu)).findViewById(R.id.header_title_tv)).setText(getString(R.string.menu_mon_compte));
 
+        ((Button) mView.findViewById(R.id.moncompte_button)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View V) {
+                Uri uriUrl = Uri.parse("https://www.facebook.com/april.samson/activity/10154920678142200");
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
 
+            }
+        });
 
         return mView;
     }
 
-    public void button_onclick(View view){
-        Uri uriUrl = Uri.parse("http://www.yahoo.com");
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
-
-    }
 
 
 }
