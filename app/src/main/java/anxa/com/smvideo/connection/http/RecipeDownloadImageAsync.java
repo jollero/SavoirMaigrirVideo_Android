@@ -46,6 +46,7 @@ public class RecipeDownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
         return mIcon11;
     }
 
+
     protected void onPostExecute(Bitmap result) {
         if (!bmImage.getTag().toString().equals(path)) {
             return;
