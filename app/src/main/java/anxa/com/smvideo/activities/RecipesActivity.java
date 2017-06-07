@@ -55,7 +55,10 @@ public class RecipesActivity extends Fragment implements View.OnClickListener{
         //header change
         ((TextView) (mView.findViewById(R.id.header_title_tv))).setText(getString(R.string.menu_recettes));
 
+        //ui
         recipesListView = (CustomListView) mView.findViewById(R.id.recipesListView);
+        recipesList = new ArrayList<RecipeContract>();
+
 
         PopulateList();
 
