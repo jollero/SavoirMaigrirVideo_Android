@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
             viewHolder = new ViewHolder();
             viewHolder.recipeImage = (ImageView) row.findViewById(R.id.recipeImage);
             viewHolder.recipeTitle = ((TextView) row.findViewById(R.id.recipeTitle));
+            viewHolder.recipeImageProgress= ((ProgressBar) row.findViewById(R.id.recipeImageProgress));
             row.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) row.getTag();
@@ -90,10 +92,10 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         //display message
         viewHolder.recipeTitle.setText(recipe.Title);
         if (avatar == null) {
-            new RecipeDownloadImageAsync(viewHolder.recipeImage, recipe.Id).execute(recipe.ImageUrl);
+            new RecipeDownloadImageAsync(viewHolder.recipeImage,viewHolder.recipeImageProgress, recipe.Id).execute(recipe.ImageUrl);
         } else {
-
             viewHolder.recipeImage.setImageBitmap(avatar);
+            viewHolder.recipeImageProgress.setVisibility(View.GONE);
         }
 
         return row;
@@ -123,5 +125,6 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
     private static class ViewHolder {
         ImageView recipeImage;
         TextView recipeTitle;
+        ProgressBar recipeImageProgress;
     }
 }

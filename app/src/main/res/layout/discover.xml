@@ -12,9 +12,9 @@
         android:layout_weight="0.5"
         layout="@layout/main_video"/>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_weight="0.8">
         <anxa.com.smvideo.ui.CustomListView
             android:id="@+id/discoverListView"
@@ -23,5 +23,5 @@
             android:cacheColorHint="#000000"
             android:divider="#000000"
             android:dividerHeight="1dp" />
-    </ScrollView>
+    </RelativeLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.io.InputStream;
 
@@ -19,11 +20,13 @@ public class RecipeDownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
     private ImageView bmImage;
     private String path;
     private int Id;
+    private ProgressBar progressBar;
 
-    public RecipeDownloadImageAsync(ImageView bmImage, int id) {
+    public RecipeDownloadImageAsync(ImageView bmImage,ProgressBar progress, int id) {
         this.bmImage = bmImage;
         this.path = bmImage.getTag().toString();
         this.Id = id;
+        this.progressBar = progress;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -55,9 +58,11 @@ public class RecipeDownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
         if (result != null && bmImage != null) {
             bmImage.setVisibility(View.VISIBLE);
             bmImage.setImageBitmap(result);
+            progressBar.setVisibility(View.GONE);
 
         } else {
             bmImage.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 }

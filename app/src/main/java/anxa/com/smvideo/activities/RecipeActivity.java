@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,10 +46,10 @@ public class RecipeActivity extends BaseVideoActivity {
                    ImageView img = (ImageView)findViewById(R.id.recipeImage);
                    img.setTag(r.Id);
                    if (avatar == null) {
-                       new RecipeDownloadImageAsync( img, r.Id).execute(r.ImageUrl);
+                       new RecipeDownloadImageAsync( img,(ProgressBar) findViewById(R.id.recipeImageProgress), r.Id).execute(r.ImageUrl);
                    } else {
                        ((ImageView)findViewById(R.id.recipeImage)).setImageBitmap(avatar);
-
+                       ((ProgressBar) findViewById(R.id.recipeImageProgress)).setVisibility(View.GONE);
                    }
                    ((TextView)findViewById(R.id.recipeIngredientsTitle)).setText((r.IngredientsTitle));
                    ((TextView)findViewById(R.id.recipeIngredients)).setText(Html.fromHtml(r.IngredientsHtml, null, new UITagHandler()));
