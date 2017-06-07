@@ -79,6 +79,7 @@ public class MainActivity extends BaseVideoActivity implements View.OnClickListe
 
         switch (position) {
             case 0: //decouvir
+
                 fragment = new DiscoverActivity();
 
                 break;
@@ -102,8 +103,10 @@ public class MainActivity extends BaseVideoActivity implements View.OnClickListe
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        //fragmentManager.beginTransaction().
-        //remove(getFragmentManager().findFragmentByTag("CURRENT_FRAGMENT")).commit();
+        if(getFragmentManager().findFragmentByTag("CURRENT_FRAGMENT") != null){
+            fragmentManager.beginTransaction().remove(getFragmentManager().findFragmentByTag("CURRENT_FRAGMENT")).commit();
+        }
+
 
         fragmentManager.beginTransaction().replace(R.id.mainContent, fragment, "CURRENT_FRAGMENT")
                 .commit();
@@ -129,5 +132,11 @@ public class MainActivity extends BaseVideoActivity implements View.OnClickListe
     public void launchActivity(Class obj) {
         Intent intent = new Intent(this, obj);
         startActivity(intent);
+    }
+
+    public void onBackPressed(View view) {
+
+        getFragmentManager().popBackStack();
+
     }
 }
