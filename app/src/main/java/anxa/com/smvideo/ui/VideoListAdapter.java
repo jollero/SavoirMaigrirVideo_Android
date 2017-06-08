@@ -107,7 +107,7 @@ public class VideoListAdapter extends ArrayAdapter<VideoContract> implements Vie
         //display message
         viewHolder.videoTitle.setText(contract.Title);
         if (avatar == null) {
-            new VideoDownloadImageAsync(viewHolder.videoImage, viewHolder.videoImageProgress,  contract.VideoUrl).execute(contract.ThumbnailUrl);
+            new VideoDownloadImageAsync(viewHolder.videoImage, viewHolder.videoImageProgress,  contract.VideoUrl).execute(contract.ThumbnailUrl.replace("hqdefault", "default"));
         } else {
 
             viewHolder.videoImage.setImageBitmap(avatar);
