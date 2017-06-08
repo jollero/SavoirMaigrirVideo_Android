@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import anxa.com.smvideo.ApplicationData;
 import anxa.com.smvideo.R;
 import anxa.com.smvideo.connection.http.RecipeDownloadImageAsync;
 import anxa.com.smvideo.contracts.RecipeContract;
@@ -92,8 +93,11 @@ public class RecipesListAdapter extends ArrayAdapter<RecipeContract> implements 
         //display message
         viewHolder.recipeTitle.setText(recipe.Title);
         if (avatar == null) {
-            new RecipeDownloadImageAsync(viewHolder.recipeImage,viewHolder.recipeImageProgress, recipe.Id).execute(recipe.ImageUrl);
-        } else {
+           /* if( !ApplicationData.getInstance().RecipeOngoigImageDownload.contains(recipe.Id)) {
+                ApplicationData.getInstance().RecipeOngoigImageDownload.add(recipe.Id);*/
+                new RecipeDownloadImageAsync(viewHolder.recipeImage, viewHolder.recipeImageProgress, recipe.Id).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, recipe.ImageUrl);
+            //}
+            } else {
             viewHolder.recipeImage.setImageBitmap(avatar);
             viewHolder.recipeImageProgress.setVisibility(View.GONE);
         }

@@ -92,7 +92,7 @@ public class TemoignagesActivity extends Fragment implements View.OnClickListene
                             }
                         }
 
-                        ApplicationData.getInstance().discoverVideoList = videosList;
+                        ApplicationData.getInstance().testimonialVideoList = videosList;
                         VideoHelper.sort("index", videosList);
                         videosList.get(0).IsSelected = true;
                         adapter.updateItems(videosList);

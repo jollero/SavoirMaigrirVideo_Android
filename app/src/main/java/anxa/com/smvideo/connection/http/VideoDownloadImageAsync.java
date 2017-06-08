@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import java.io.InputStream;
 
 import anxa.com.smvideo.ApplicationData;
+import anxa.com.smvideo.util.VideoHelper;
 
 /**
  * Created by angelaanxa on 5/31/2017.
@@ -30,17 +31,23 @@ public class VideoDownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected Bitmap doInBackground(String... urls) {
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         String urldisplay = urls[0];
 
 
         Bitmap mIcon11 = null;
         try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
+            if (!ApplicationData.getInstance().videoPhotoList.containsKey(String.valueOf(Id))) {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
 
-            if (!ApplicationData.getInstance().videoPhotoList.containsKey(Id) && mIcon11 != null) {
+
                 ApplicationData.getInstance().videoPhotoList.put(Id, mIcon11);
             }
+else{
+                    mIcon11 = VideoHelper.GetVideoImage(String.valueOf(Id));
+                }
+
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());

@@ -78,7 +78,7 @@ public  void PopulateList()
 
     caller = new ApiCaller();
 
-    recipesListView.setAdapter(adapter);
+
 
     if (ApplicationData.getInstance().recipeList != null && ApplicationData.getInstance().recipeList.size() > 0) {
         AddOnClickListener();
@@ -89,6 +89,7 @@ public  void PopulateList()
                 currentViewRecipeList.add(r);
             }
         }
+        recipesListView.setAdapter(adapter);
         adapter.updateItems(currentViewRecipeList);
     } else {
         //api call
@@ -116,6 +117,7 @@ public  void PopulateList()
                                 currentViewRecipeList.add(r);
                             }
                         }
+                        recipesListView.setAdapter(adapter);
                         adapter.updateItems(currentViewRecipeList);
                     }
                 }
