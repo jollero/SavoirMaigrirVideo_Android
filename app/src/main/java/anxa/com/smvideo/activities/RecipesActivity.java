@@ -1,6 +1,7 @@
 package anxa.com.smvideo.activities;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -77,7 +78,7 @@ public  void PopulateList()
 
     caller = new ApiCaller();
 
-    recipesListView.setAdapter(adapter);
+
 
     if (ApplicationData.getInstance().recipeList != null && ApplicationData.getInstance().recipeList.size() > 0) {
         AddOnClickListener();
@@ -88,6 +89,7 @@ public  void PopulateList()
                 currentViewRecipeList.add(r);
             }
         }
+        recipesListView.setAdapter(adapter);
         adapter.updateItems(currentViewRecipeList);
     } else {
         //api call
@@ -115,6 +117,7 @@ public  void PopulateList()
                                 currentViewRecipeList.add(r);
                             }
                         }
+                        recipesListView.setAdapter(adapter);
                         adapter.updateItems(currentViewRecipeList);
                     }
                 }
@@ -166,14 +169,26 @@ public  void PopulateList()
             adapter.updateItems(currentViewRecipeList);
         } else {
             int recipeId = (Integer) v.getTag(R.id.recipe_id);
-            Intent mainIntent;
-            mainIntent = new Intent(context, RecipeActivity.class);
-            mainIntent.putExtra("RECIPE_ID", recipeId);
-            startActivity(mainIntent);
+
+            Fragment fragment = new RecipeActivity();
+            FragmentManager fragmentManager = getFragmentManager();
+            Bundle bundle = new Bundle();
+            bundle.putString("RECIPE_ID", String.valueOf(recipeId));
+            fragment.setArguments(bundle);
+            fragmentManager.beginTransaction().add(R.id.mainContent, fragment, "RECIPE_FRAGMENT").addToBackStack(null)
+                    .commit();
+
         }
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if(requestCode == 1){
+
+        }
+    }
 
     private void AddOnClickListener() {
         ((Button) mView.findViewById(R.id.button_entree)).setOnClickListener(this);

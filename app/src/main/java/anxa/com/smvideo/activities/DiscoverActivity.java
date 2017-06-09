@@ -47,9 +47,6 @@ public class DiscoverActivity extends Fragment implements View.OnClickListener {
     private VideoListAdapter adapter;
     private List<VideoContract> videosList;
 
-    private YouTubePlayerView youTubePlayerView;
-    private TextView vidTitle, vidDesc, vidDuration;
-
     private YouTubePlayerFragment playerFragment;
     View mView;
 
@@ -101,6 +98,7 @@ public class DiscoverActivity extends Fragment implements View.OnClickListener {
 
                         ApplicationData.getInstance().discoverVideoList = videosList;
                         VideoHelper.sort("index", videosList);
+                        videosList.get(0).IsSelected = true;
                         adapter.updateItems(videosList);
 
                         RefreshPlayer(mView, videosList.get(0));
@@ -133,16 +131,10 @@ public class DiscoverActivity extends Fragment implements View.OnClickListener {
         for(int i = 0; i < videosList.size(); i++){
             VideoContract temp = new VideoContract();
             if (videosList.get(i).VideoUrl == videoId) {
-
                 RefreshPlayer(v, videosList.get(i));
-                temp = videosList.get(i);
-                temp.IsSelected = true;
-                videosList.set(i,temp );
-                return;
+                videosList.get(i).IsSelected = true;
             }else{
-                temp = videosList.get(i);
-                temp.IsSelected = false;
-                videosList.set(i,temp );
+                videosList.get(i).IsSelected = false;
             }
         }
         adapter.updateItems(videosList);
